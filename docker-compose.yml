@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+    app:
+        container_name: fincheck-frontend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ".:/app"
+            - "/app/node_modules"
+        ports:
+            - "3002:3000"
+        environment:
+            - NODE_ENV=development
+    db:
+        container_name: fincheck-database
+        image: postgres
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
