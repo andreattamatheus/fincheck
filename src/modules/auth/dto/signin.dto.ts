@@ -1,11 +1,6 @@
-import { Category } from '@prisma/client';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
-export class CreateUserDto {
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
+export class SigninDto {
   @IsString()
   @IsNotEmpty()
   @IsEmail()
@@ -15,6 +10,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(8)
   password: string;
-
-  categories: Category;
 }
