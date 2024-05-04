@@ -14,8 +14,10 @@ export class CategoriesService {
     });
   }
 
-  findAll() {
-    return `This action returns all categories`;
+  findAllByUser(userId: string) {
+    return this.categoryRepository.findMany({
+      where: { userId: userId },
+    });
   }
 
   findOne(id: string) {

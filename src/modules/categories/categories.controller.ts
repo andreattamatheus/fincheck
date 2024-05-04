@@ -26,8 +26,8 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll(@ActiveUserId() userId: string) {
-    return this.categoriesService.findAll();
+  findAllByUser(@ActiveUserId() userId: string) {
+    return this.categoriesService.findAllByUser(userId);
   }
 
   @Get(':categoryId')
