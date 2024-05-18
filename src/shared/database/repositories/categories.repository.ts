@@ -10,6 +10,10 @@ export class CategoryRepository {
     return this.prismaService.category.create(createCategoryDto);
   }
 
+  findFirst(findFirstDto: Prisma.CategoryFindFirstArgs) {
+    return this.prismaService.category.findFirst(findFirstDto);
+  }
+
   findMany(findAllByUser: Prisma.CategoryFindManyArgs) {
     return this.prismaService.category.findMany(findAllByUser);
   }
