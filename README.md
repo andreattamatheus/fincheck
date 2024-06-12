@@ -16,6 +16,7 @@ The design is available on [Figma](https://www.figma.com/file/RRBEBWgyQZbEYPQhzO
 - First, clone the repo.
 
 ```bash
+git clone https://github.com/andreattamatheus/fincheck.git
 
 ```
 
