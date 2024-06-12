@@ -33,17 +33,31 @@ yarn
 
 # Create database
 
+```bash
+
 sudo docker exec -it fincheck-database bash
 
 psql -U root
 
+```
+
 # Run server
 
+```bash
+
 yarn run start:dev
+
+```
+
+# Run migrates
+
+```bash
 
 yarn prisma migrate dev
 
 yarn prisma studio
+
+```
 
 ## Running the app
 
