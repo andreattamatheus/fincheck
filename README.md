@@ -30,18 +30,44 @@ yarn
 
 - Run PostgreSQL with Docker
 
-The database can be launched locally with a [Docker Container](https://www.docker.com/resources/what-container/).
+# Create database
 
-Check the official documentation to install the [Docker Engine](https://docs.docker.com/engine/install/ubuntu/).
+sudo docker exec -it fincheck-database bash
+
+psql -U root
+
+# Run server
+
+yarn run start:dev
+
+yarn prisma migrate dev
+
+yarn prisma studio
+
+## Running the app
 
 ```bash
-docker compose up -d
+# development
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
 ```
 
-- Run migrations
+## Test
 
 ```bash
-npx prisma migrate dev
+# unit tests
+$ yarn run test
+
+# e2e tests
+$ yarn run test:e2e
+
+# test coverage
+$ yarn run test:cov
 ```
 
 ## Running the app (Front End)
