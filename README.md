@@ -59,7 +59,7 @@ yarn prisma studio
 
 ```
 
-## Running the app
+## Running the API
 
 ```bash
 # development
@@ -91,7 +91,12 @@ $ yarn run test:cov
 - Install dependencies
 
 ```bash
-yarn
+$ yarn
+
+# start server
+
+$ yarn dev
+
 ```
 
 - Fill the .env variables (In .env.example you can see them)
