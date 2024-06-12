@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+    app:
+        container_name: fincheck-frontend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ".:/app"
+        ports:
+            - "5173:5173"
+        environment:
+            - NODE_ENV=development
