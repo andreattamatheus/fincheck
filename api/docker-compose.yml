@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     app:
-        container_name: fincheck-frontend
+        container_name: fincheck-api
         build:
             context: .
             dockerfile: Dockerfile

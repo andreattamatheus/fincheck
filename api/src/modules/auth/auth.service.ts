@@ -36,7 +36,7 @@ export class AuthService {
     const accessToken = await this.generateToken(user.id);
 
     return {
-      access_token: accessToken,
+      accessToken,
     };
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
     const accessToken = await this.generateToken(user.id);
 
     return {
-      access_token: accessToken,
+      accessToken,
     };
   }
 
