@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { authService } from "../../../app/services/authService";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { SigninParams } from "../../../app/services/authService/signin";
 
 const validation = z.object({
   email: z.string().nonempty("Email is required.").email("Email not valid."),
@@ -22,9 +25,27 @@ export function useLoginController() {
     resolver: zodResolver(validation),
   });
 
-  const handleSubmit = hookFormHandleSubmit(async (data) => {
-    const responseData = await authService.login(data);
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async (data: SigninParams) => {
+      return authService.signin(data);
+    },
   });
 
-  return { handleSubmit, register, errors };
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+    } catch (error) {
+      toast.error("Error trying to login user", {
+        icon: "❌",
+        style: {
+          borderRadius: "10px",
+          background: "rgb(201 42 42)",
+          color: "#fff",
+        },
+      });
+      console.log(error);
+    }
+  });
+
+  return { handleSubmit, register, errors, isLoading };
 }

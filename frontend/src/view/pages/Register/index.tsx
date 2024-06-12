@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { Input } from '../../components/Input';
-import { Button } from '../../components/Button';
-import { useRegisterController } from './useRegisterController';
+import { Link } from "react-router-dom";
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
+import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { register, handleSubmit, errors } = useRegisterController();
+  const { register, handleSubmit, errors, isLoading } = useRegisterController();
 
   return (
     <>
@@ -30,22 +30,22 @@ export function Register() {
           type="text"
           placeholder="Name"
           error={errors.name?.message}
-          {...register('name')}
+          {...register("name")}
         />
         <Input
           type="email"
           placeholder="Email"
           error={errors.email?.message}
-          {...register('email')}
+          {...register("email")}
         />
         <Input
           type="password"
           placeholder="Password"
           error={errors.password?.message}
-          {...register('password')}
+          {...register("password")}
         />
 
-        <Button type="submit" className="mt-2">
+        <Button type="submit" className="mt-2" isLoading={isLoading}>
           Register
         </Button>
       </form>
