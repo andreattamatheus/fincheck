@@ -5,6 +5,7 @@ import { authService } from "../../../app/services/authService";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { SigninParams } from "../../../app/services/authService/signin";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 const validation = z.object({
   email: z.string().nonempty("Email is required.").email("Email not valid."),
@@ -31,9 +32,12 @@ export function useLoginController() {
     },
   });
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
-      await mutateAsync(data);
+      const { accessToken } = await mutateAsync(data);
+      signin(accessToken);
     } catch (error) {
       toast.error("Error trying to login user", {
         icon: "❌",
@@ -43,7 +47,6 @@ export function useLoginController() {
           color: "#fff",
         },
       });
-      console.log(error);
     }
   });
 

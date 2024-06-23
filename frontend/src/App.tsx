@@ -3,17 +3,26 @@ import "./App.css";
 import { Router } from "./Router";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./app/contexts/AuthContext";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
         <Router />
         <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+      </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
