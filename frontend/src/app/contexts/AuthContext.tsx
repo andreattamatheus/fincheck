@@ -29,7 +29,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const signin = useCallback((accessToken: string) => {
-    console.log("accessToken", accessToken);
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
     setSignedIn(true);
   }, []);
@@ -51,8 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{ signedIn: isSuccess && signedIn, signin, signout }}
     >
-      <h1>{data?.name}</h1>
-      <LaunchScreen isLoading={isFetching} />;{!isFetching && children}
+      <LaunchScreen isLoading={isFetching} />
+      {!isFetching && children}
     </AuthContext.Provider>
   );
 }
