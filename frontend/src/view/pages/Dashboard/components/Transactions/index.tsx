@@ -3,12 +3,18 @@ import { TransactionsIcon } from "../../../../components/icons/TransactionsIcon"
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
+import { SLiderOption } from "./SliderOption";
+import { SliderNavigation } from "./SliderNavigation";
+import { formatCurrency } from "../../../../../app/utils/formatCurrecy";
+import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import { useTransactionController } from "./useTransactionController";
 import { cn } from "../../../../../app/utils/cn";
 
 export function Transactions() {
+  const { areValuesVisible } = useTransactionController();
   return (
-    <div className="bg-teal-100 rounded-2xl w-full h-full px-4 py-8 md:p-10">
-      <header className="">
+    <div className="bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
+      <header>
         <div className="flex items-center justify-between">
           <button className="flex items-center gap-2">
             <TransactionsIcon />
@@ -22,30 +28,42 @@ export function Transactions() {
             <FilterIcon />
           </button>
         </div>
-        <div className="mt-6">
-          <Swiper
-            slidesPerView={3}
-            centeredSlides
-            onSlideChange={() => console.log("slide change")}
-          >
-            {MONTHS.map((month) => (
+        <div className="mt-6 relative">
+          <Swiper slidesPerView={3} centeredSlides>
+            <SliderNavigation />
+            {MONTHS.map((month, index) => (
               <SwiperSlide key={month}>
                 {({ isActive }) => (
-                  <button
-                    className={cn(
-                      "w-full rounded-full h-12 text-sm text-gray-800 tracking-[-0.5px] font-medium",
-                      isActive && "bg-white"
-                    )}
-                  >
-                    {month}
-                  </button>
+                  <SLiderOption
+                    isActive={isActive}
+                    month={month}
+                    index={index}
+                  />
                 )}
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </header>
-      <div className="mt-4">Content</div>
+      <div className="px-2 mt-4 space-y-2 flex-1 overflow-y-auto">
+        <div className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4">
+          <div className="flex-1 flex items-center gap-3">
+            <CategoryIcon type="income" />
+            <div className="flex flex-col">
+              <span className="font-bold tracking-[-0.5px]">Total Income</span>
+              <span className="text-sm text-gray-600">04/06/2024</span>
+            </div>
+          </div>
+          <span
+            className={cn(
+              "font-medium text-green-800 tracking-[-0.5px]",
+              !areValuesVisible && "blur-sm"
+            )}
+          >
+            {formatCurrency(123)}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
