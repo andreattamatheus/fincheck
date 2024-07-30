@@ -31,7 +31,7 @@ export function AccountCard({ color, name, balance, type }: AccountCardProps) {
         >
           {formatCurrency(balance)}
         </span>
-        <small className="text-gray-600 text-sm ">Saldo atual</small>
+        <small className="text-gray-600 text-sm ">Total balance</small>
       </div>
     </div>
   );
