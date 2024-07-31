@@ -1,14 +1,16 @@
 import { Logo } from "../../components/Logo";
+import { Modal } from "../../components/Modal";
 import { UserMenu } from "../../components/UserMenu";
 import { Accounts } from "./components/Accounts";
 import { DashboardProvider } from "./components/DashboardContext";
+import { Fab } from "./components/Fab";
 import { Transactions } from "./components/Transactions";
 
 export function Dashboard() {
   return (
     <DashboardProvider>
-      <div className="h-full w-full p-4 md:px-8 md:pb-8 md:pt-6 flex-col gap-4">
-        <header className="h-12 flex justify-between items-center">
+      <div className="h-full w-full p-4 md:px-8 md:pb-20 md:pt-6 flex-col gap-4">
+        <header className="h-8 flex justify-between items-center">
           <Logo className="h-6 text-teal-900" />
           <UserMenu />
         </header>
@@ -21,6 +23,7 @@ export function Dashboard() {
             <Transactions />
           </div>
         </main>
+        <Fab />
       </div>
     </DashboardProvider>
   );
