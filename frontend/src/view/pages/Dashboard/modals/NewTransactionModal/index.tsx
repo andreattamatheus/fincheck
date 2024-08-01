@@ -1,4 +1,6 @@
+import { Button } from "../../../../components/Button";
 import { ColorsDropdownInput } from "../../../../components/ColorsDropdownInput";
+import { DatePickerInput } from "../../../../components/DatePickerInput";
 import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
@@ -12,18 +14,18 @@ export function NewTransactionModal() {
     newTransactionType,
   } = useNewTransactionModalController();
 
-  const isExpense = newTransactionType === "INCOME";
+  const isExpense = newTransactionType === "EXPENSE";
 
   return (
     <Modal
-      title={isExpense ? "New income" : "New expense"}
+      title={isExpense ? "New expense" : "New income"}
       open={isNewTransactionModalOpen}
       onClose={closeNewTransactionModal}
     >
       <form action="">
         <div>
           <span className="text-gray-600 text-xs tracking-[-0.5px]">
-            Balance
+            Balance {isExpense ? "from expense" : "from income"}
           </span>
           <div className="flex items-center gap-2">
             <span className="text-gray-600 text-lg tracking-[-0.5px]">R$</span>
@@ -31,7 +33,11 @@ export function NewTransactionModal() {
           </div>
         </div>
         <div className="mt-10 flex flex-col gap-4">
-          <Input type="text" name="accountName" placeholder="Account name" />
+          <Input
+            type="text"
+            name="accountName"
+            placeholder={isExpense ? "Expense name" : "Income name"}
+          />
           <Select
             placeholder="Type"
             options={[
@@ -40,7 +46,16 @@ export function NewTransactionModal() {
               { value: "CHECKING", label: "Checking account" },
             ]}
           />
-          <ColorsDropdownInput />
+          <Select
+            placeholder={isExpense ? "Pay with" : "Receive with"}
+            options={[
+              { value: "INVESTIMENT", label: "Investiment" },
+              { value: "CASH", label: "Money" },
+              { value: "CHECKING", label: "Checking account" },
+            ]}
+          />
+          <DatePickerInput />
+          <Button> Criar </Button>
         </div>
       </form>
     </Modal>
