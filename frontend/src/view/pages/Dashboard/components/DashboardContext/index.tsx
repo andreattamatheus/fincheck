@@ -3,7 +3,14 @@ import { localStorageKeys } from "../../../../../app/config/localStorageKeys";
 
 interface DashboardContextValue {
   areValuesVisible: boolean;
-  toggleValuesVisibility: () => void;
+  isNewAccountModalOpen: boolean;
+  isNewTransactionModalOpen: boolean;
+  newTransactionType: "INCOME" | "EXPENSE" | null;
+  toggleValuesVisibility(): void;
+  openNewAccountModal(): void;
+  closeNewAccountModal(): void;
+  openNewTransactionModal(type: "INCOME" | "EXPENSE"): void;
+  closeNewTransactionModal(): void;
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
@@ -17,6 +24,32 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     return !!storedValueVisibility;
   });
 
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
+    useState(false);
+
+  const [newTransactionType, setNewTransactionType] = useState<
+    "INCOME" | "EXPENSE" | null
+  >(null);
+
+  const openNewAccountModal = useCallback(() => {
+    setIsNewAccountModalOpen(true);
+  }, []);
+
+  const closeNewAccountModal = useCallback(() => {
+    setIsNewAccountModalOpen(false);
+  }, []);
+
+  const openNewTransactionModal = useCallback((type: "INCOME" | "EXPENSE") => {
+    setNewTransactionType(type);
+    setIsNewTransactionModalOpen(true);
+  }, []);
+
+  const closeNewTransactionModal = useCallback(() => {
+    setNewTransactionType(null);
+    setIsNewTransactionModalOpen(false);
+  }, []);
+
   const toggleValuesVisibility = useCallback(() => {
     setAreValuesVisible((prevState) => {
       localStorage.setItem(
@@ -29,7 +62,17 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <DashboardContext.Provider
-      value={{ areValuesVisible, toggleValuesVisibility }}
+      value={{
+        areValuesVisible,
+        toggleValuesVisibility,
+        isNewAccountModalOpen,
+        openNewAccountModal,
+        closeNewAccountModal,
+        isNewTransactionModalOpen,
+        openNewTransactionModal,
+        closeNewTransactionModal,
+        newTransactionType,
+      }}
     >
       {children}
     </DashboardContext.Provider>
