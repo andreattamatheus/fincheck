@@ -24,7 +24,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     return !!storedValueVisibility;
   });
 
-  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(true);
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
     useState(false);
 

@@ -4,10 +4,10 @@ export interface BankAccountParams {
   name: string;
   initialBalance: number;
   color: string;
-  type: "CHECKING" | "INVESTIMENT" | "CASH";
+  type: "CHECKING" | "INVESTMENT" | "CASH";
 }
 
-export async function signin(params: BankAccountParams) {
+export async function create(params: BankAccountParams) {
   const { data } = await httpClient.post("/bank-accounts", params);
 
   return data;

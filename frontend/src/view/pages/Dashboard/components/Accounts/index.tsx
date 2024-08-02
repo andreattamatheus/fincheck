@@ -94,50 +94,16 @@ export function Accounts() {
                       isEnd={sliderState.isEnd}
                     />
                   </div>
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#7950F2"
-                      name="Nubank"
-                      balance={1000.02}
-                      type="CASH"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#ff9641"
-                      name="Itaú"
-                      balance={50.01}
-                      type="CHECKING"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#282425"
-                      name="XP Investimentos"
-                      balance={753.0}
-                      type="INVESTMENT"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#282425"
-                      name="XP Investimentos"
-                      balance={753.0}
-                      type="INVESTMENT"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#282425"
-                      name="XP Investimentos"
-                      balance={753.0}
-                      type="INVESTMENT"
-                    />
-                  </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide key={account.id}>
+                      <AccountCard
+                        name={account.name}
+                        balance={account.currentBalance}
+                        type={account.type}
+                        color={account.color}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               )}
             </div>

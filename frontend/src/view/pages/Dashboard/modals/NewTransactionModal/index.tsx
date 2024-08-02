@@ -41,7 +41,7 @@ export function NewTransactionModal() {
           <Select
             placeholder="Type"
             options={[
-              { value: "INVESTIMENT", label: "Investiment" },
+              { value: "INVESTMENT", label: "Investiment" },
               { value: "CASH", label: "Money" },
               { value: "CHECKING", label: "Checking account" },
             ]}
@@ -49,7 +49,7 @@ export function NewTransactionModal() {
           <Select
             placeholder={isExpense ? "Pay with" : "Receive with"}
             options={[
-              { value: "INVESTIMENT", label: "Investiment" },
+              { value: "INVESTMENT", label: "Investiment" },
               { value: "CASH", label: "Money" },
               { value: "CHECKING", label: "Checking account" },
             ]}
