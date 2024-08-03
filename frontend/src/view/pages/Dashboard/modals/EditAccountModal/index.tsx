@@ -5,24 +5,48 @@ import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
-import { useNewAccountModalController } from "./useNewAccountModalController";
+import { useEditAccountModalController } from "./useEditAccountModalController";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
 
-export function NewAccountModal() {
+export function EditAccountModal() {
   const {
-    isNewAccountModalOpen,
-    closeNewAccountModal,
+    isEditAccountModalOpen,
+    closeEditAccountModal,
     errors,
     handleSubmit,
     register,
     control,
     isLoading,
-  } = useNewAccountModalController();
+    isDeleteModalOpen,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
+    isLoadingDelete,
+  } = useEditAccountModalController();
+
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmDeleteModal
+        title="Delete acount"
+        description="By deleting this account you will lose all the data related to it."
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleDeleteAccount}
+        isLoading={isLoadingDelete}
+      />
+    );
+  }
 
   return (
     <Modal
-      title="New account"
-      open={isNewAccountModalOpen}
-      onClose={closeNewAccountModal}
+      title="Edit account"
+      open={isEditAccountModalOpen}
+      onClose={closeEditAccountModal}
+      action={
+        <button onClick={handleOpenDeleteModal}>
+          <TrashIcon className="w-6 h-6 text-red-900" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div>
@@ -87,7 +111,7 @@ export function NewAccountModal() {
         </div>
         <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
           {" "}
-          Create{" "}
+          Edit{" "}
         </Button>
       </form>
     </Modal>
