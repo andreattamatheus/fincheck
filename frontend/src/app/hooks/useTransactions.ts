@@ -4,7 +4,11 @@ import { transactionsService } from "../services/transactions";
 export function useTransactions() {
   const { data, isFetching } = useQuery({
     queryKey: ["transactions"],
-    queryFn: transactionsService.getAll,
+    queryFn: () =>
+      transactionsService.getAll({
+        month: 7,
+        year: 2024,
+      }),
   });
 
   return {

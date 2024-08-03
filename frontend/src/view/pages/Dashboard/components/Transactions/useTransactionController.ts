@@ -9,6 +9,8 @@ export function useTransactionController() {
 
   const { transactions, isFetching } = useTransactions();
 
+  console.log(transactions);
+
   function handleOpenFiltersModal() {
     setIsFiltersModalOpen(true);
   }
