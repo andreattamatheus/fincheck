@@ -34,7 +34,6 @@ export function useNewAccountModalController() {
 
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
-      console.log();
       await mutateAsync({
         ...data,
         initialBalance: currenctStringToNumber(data.initialBalance),

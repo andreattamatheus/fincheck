@@ -5,16 +5,11 @@ import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTyp
 import { useDashboard } from "../DashboardContext/useDashboard";
 interface AccountCardProps {
   data: BankAccount;
-  // id: string;
-  // color: string;
-  // name: string;
-  // balance: number;
-  // type: "CASH" | "CHECKING" | "INVESTMENT";
 }
 
 export function AccountCard({ data }: AccountCardProps) {
   const { areValuesVisible, openEditAccountModal } = useDashboard();
-  const { color, name, initialBalance, type } = data;
+  const { color, name, currentBalance, type } = data;
   return (
     <div
       className="bg-white rounded-2xl p-4 h-[200px] flex flex-col justify-between border-b-4 border-teal-950"
@@ -35,7 +30,7 @@ export function AccountCard({ data }: AccountCardProps) {
             !areValuesVisible && "blur-sm"
           )}
         >
-          {formatCurrency(initialBalance)}
+          {formatCurrency(currentBalance)}
         </span>
         <small className="text-gray-600 text-sm ">Total balance</small>
       </div>

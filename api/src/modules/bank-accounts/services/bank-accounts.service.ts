@@ -35,8 +35,8 @@ export class BankAccountsService {
       },
     });
 
-    return bankAccounts.map((bankAccount) => {
-      const totalTransactions = bankAccount.transactions.reduce(
+    return bankAccounts.map(({ transactions, ...bankAccount }) => {
+      const totalTransactions = transactions.reduce(
         (acc, transaction) =>
           acc +
           (transaction.type === 'INCOME'
