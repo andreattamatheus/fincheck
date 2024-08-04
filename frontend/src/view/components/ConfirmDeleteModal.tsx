@@ -24,7 +24,7 @@ export function ConfirmDeleteModal({
           <TrashIcon className="w-12 h-12 text-red-900" />
         </div>
         <p className="w-[180px] text-gray-800 font-bold tracking-[-0.5px]">
-          Are you sure you want to delete this account?
+          Are you sure you want to delete this transaction?
         </p>
         {description && (
           <p className="text-gray-800 tracking-[-0.5px]">{description}</p>
@@ -37,7 +37,7 @@ export function ConfirmDeleteModal({
           variant="danger"
           onClick={onConfirm}
         >
-          Yes, delete account
+          Yes, delete transaction
         </Button>
         <Button
           className="w-full"

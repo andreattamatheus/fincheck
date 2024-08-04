@@ -5,13 +5,23 @@ import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
-import { useNewTransactionModalController } from "./useNewTransactionModalController";
+import { useEditTransactionModalController } from "./useEditTransactionModalController";
+import { Transaction } from "../../../../../app/entities/Transaction";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
 
-export function NewTransactionModal() {
+interface EditTransactionModalProps {
+  open: boolean;
+  onClose: () => void;
+  transaction: Transaction | null;
+}
+
+export function EditTransactionModal({
+  transaction,
+  open,
+  onClose,
+}: EditTransactionModalProps) {
   const {
-    isNewTransactionModalOpen,
-    closeNewTransactionModal,
-    newTransactionType,
     register,
     errors,
     control,
@@ -19,15 +29,36 @@ export function NewTransactionModal() {
     accounts,
     categories,
     isLoading,
-  } = useNewTransactionModalController();
+    isDeleteModalOpen,
+    handleCloseDeleteModal,
+    handleOpenDeleteModal,
+    handleDeleteTransaction,
+    isLoadingDelete,
+  } = useEditTransactionModalController(transaction, onClose);
 
-  const isExpense = newTransactionType === "EXPENSE";
+  const isExpense = transaction?.type === "EXPENSE";
+
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmDeleteModal
+        title={isExpense ? "Delete expense" : "Delete income"}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleDeleteTransaction}
+        isLoading={isLoadingDelete}
+      />
+    );
+  }
 
   return (
     <Modal
-      title={isExpense ? "New expense" : "New income"}
-      open={isNewTransactionModalOpen}
-      onClose={closeNewTransactionModal}
+      title={isExpense ? "Edit expense" : "Edit income"}
+      open={open}
+      onClose={onClose}
+      action={
+        <button onClick={handleOpenDeleteModal}>
+          <TrashIcon className="w-6 h-6 text-red-900" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div>
@@ -109,7 +140,7 @@ export function NewTransactionModal() {
         </div>
         <Button isLoading={isLoading} type="submit" className="w-full mt-6">
           {" "}
-          Create{" "}
+          Update{" "}
         </Button>
       </form>
     </Modal>

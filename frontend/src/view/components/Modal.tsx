@@ -46,9 +46,9 @@ export function Modal({
 
             <span className="text-lg tracking-[-1px] font-bold">{title}</span>
 
-            <button className="h-12 w-12 flex items-center justify-center outline-none">
+            <div className="h-12 w-12 flex items-center justify-center outline-none">
               {action}
-            </button>
+            </div>
           </header>
           <div className="">{children}</div>
         </ModalDialog.Content>
