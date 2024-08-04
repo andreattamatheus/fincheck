@@ -1,44 +1,39 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { Modal } from "../../../../../components/Modal";
 import { Button } from "../../../../../components/Button";
-import { useFiltersModals } from "./useFiltersModal";
+import { useFiltersModalController } from "./useFiltersModalController";
 import { cn } from "../../../../../../app/utils/cn";
 
 interface FiltersModalProps {
   open: boolean;
   onClose?(): void;
+  onApplyFilters(filters: {
+    bankAccountId: string | undefined;
+    year: number;
+  }): void;
 }
 
-const mockedBankAccounts = [
-  {
-    id: "1",
-    name: "XP Investimentos",
-  },
-  {
-    id: "2",
-    name: "Nubank",
-  },
-  {
-    id: "3",
-    name: "Cash",
-  },
-];
-
-export function FiltersModal({ open, onClose }: FiltersModalProps) {
+export function FiltersModal({
+  open,
+  onClose,
+  onApplyFilters,
+}: FiltersModalProps) {
   const {
     selectedBankAccountId,
     handleSelectedBankAccount,
     selectedYear,
     handleChangeYear,
-  } = useFiltersModals();
+    accounts,
+  } = useFiltersModalController();
+
   return (
     <Modal open={open} title="Filter" onClose={onClose}>
       <div className="">
         <span className="text-lg tracking-[-1px] font-bold text-gray-800">
-          Account
+          Accounts
         </span>
         <div className="space-y-2 mt-2">
-          {mockedBankAccounts.map((account) => (
+          {accounts.map((account) => (
             <button
               key={account.id}
               onClick={() => handleSelectedBankAccount(account.id)}
@@ -74,7 +69,17 @@ export function FiltersModal({ open, onClose }: FiltersModalProps) {
           </button>
         </div>
       </div>
-      <Button className="mt-10 w-full">Apply filters</Button>
+      <Button
+        className="mt-10 w-full"
+        onClick={() =>
+          onApplyFilters({
+            bankAccountId: selectedBankAccountId,
+            year: selectedYear,
+          })
+        }
+      >
+        Apply filters
+      </Button>
     </Modal>
   );
 }
