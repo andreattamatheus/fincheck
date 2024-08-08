@@ -10,14 +10,6 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-### rsync
-
-```bash
-rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \
--e "ssh -i ~/.ssh/your-key.pem" \
-. ubuntu@ip-address:~/app
-```
-
 ### Database
 
 Postgres
@@ -43,7 +35,7 @@ GRANT ALL PRIVILEGES ON DATABASE fincheck TO admin;
 Create a new file for your environment variables and open the file in Vim:
 
 ```bash
-sudo vim /etc/app.env
+sudo vim /app_folder/.env
 ```
 
 In Vim, add your variables in the format VARIABLE=value. For example:
@@ -58,8 +50,8 @@ to save and exit vim, press esc then :wq then enter
 Restrict the file permissions for security.
 
 ```bash
-sudo chmod 600 /etc/app.env
-sudo chown ubuntu:ubuntu /etc/app.env
+sudo chmod 600 /app_folder/.env
+sudo chown ubuntu:ubuntu /app_folder/.env
 ```
 
 #### Step 2: Create the systemd Service File
@@ -79,11 +71,11 @@ After=network.target multi-user.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/app
-ExecStart=/usr/bin/npm start
+WorkingDirectory=/app_folder/
+ExecStart=/usr/bin/yarn run start:[prod|dev]
 Restart=always
 Environment=NODE_ENV=production
-EnvironmentFile=/etc/app.env
+EnvironmentFile=/app_folder/.env
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=myapp
@@ -116,4 +108,76 @@ tail logs:
 
 ```bash
 sudo journalctl -fu myapp.service
+```
+
+### Installing Nginx
+
+#### Execute the following command to install Nginx
+
+```bash
+sudo apt install nginx
+```
+
+It is recommended that you enable the most restrictive profile that will still allow the traffic you’ve configured. Right now, we will only need to allow traffic on port 80.
+
+```bash
+sudo ufw allow 'Nginx HTTP'
+```
+
+To confirm Nginx has been correctly installed, use the following command.
+
+```bash
+sudo systemctl status nginx
+```
+
+navigate to sites-available inside the nginx folder.
+
+```bash
+cd /etc/nginx/sites-available/
+```
+
+#### Nginx configuration
+
+```bash
+server {
+	listen 80;
+    server_name example.com www.example.com; # change the doamin name
+    root /var/www/html;
+    index index.html index.htm;
+    location / {
+    	proxy_pass http://127.0.0.1:3000; # change the port
+        proxy_read_timeout 60;
+        proxy_connect_timeout 60;
+        proxy_redirect off;
+
+        # Allow the use of websockets
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+#### Now, Create a symbolic link (symlink) in sites-enabled that points to your configuration file in sites-available. This step is crucial for enabling the new settings you've added for your application.
+
+To create the symbolic link, execute the following command:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/app1.conf /etc/nginx/sites-enabled/
+```
+
+Likewise, you can create multiple .conf files if you're managing multiple applications. Just ensure to modify the server_name and proxy_pass accordingly.
+
+We can test the nginx config by running the following command.
+
+```bash
+sudo nginx -t
+```
+
+#### After completing the configuration, restart Nginx to apply the changes by executing the following command.
+
+```bash
+sudo systemctl restart nginx.service
 ```
