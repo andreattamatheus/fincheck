@@ -2,7 +2,7 @@ import axios from "axios";
 import { localStorageKeys } from "../config/localStorageKeys";
 
 export const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "http://fincheck-api.matheusandreatta.com.br",
   //   headers: {
   //     token: import.meta.env.VITE_API_TOKEN,
   //   },

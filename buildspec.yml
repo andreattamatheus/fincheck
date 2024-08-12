@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16 # Specify your node version
+    commands:
+      - echo "Installing frontend dependencies"
+      - cd frontend
+      - yarn # or yarn install
+
+  build:
+    commands:
+      - echo "Building the frontend"
+      - yarn build
+
+  post_build:
+    commands:
+      - echo "Deploying to S3"
+      - aws s3 sync dist/ s3://fincheck-app.matheusandreatta/ --delete
+
+artifacts:
+  files:
+    - "**/*"
+  base-directory: "frontend/dist"
