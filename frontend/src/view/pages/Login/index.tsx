@@ -40,7 +40,7 @@ export function Login() {
           {...register("password")}
         />
         <Button type="submit" className="mt-2" isLoading={isLoading}>
-          Enter button
+          Enter
         </Button>
       </form>
     </>
