@@ -21,7 +21,7 @@ export function Login() {
             to="/register"
             className="tracking-[-1px] text-teal-900 font-medium"
           >
-            Create account
+            Create an account
           </Link>
         </p>
       </header>
