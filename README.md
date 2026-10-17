@@ -100,3 +100,7 @@ $ yarn dev
 ```
 
 - Fill the .env variables (In .env.example you can see them)
+
+## Roadmap
+
+- [ ] Create the design system for the project
